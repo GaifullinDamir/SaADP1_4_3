@@ -119,6 +119,16 @@ void mainAddAfter(MainList*& pHeadMain, MainList*& pCurrentMain)
 
 void subDelete(MainList*& pHeadMain, MainList*& pPreviousMain, MainList*& pCurrentMain)
 {
+	Sublist* pCurrentSub = pCurrentMain->firstSub;
+	Sublist* pTemporary;
+	while (!subIsEmpty(pCurrentSub))
+	{
+		pTemporary = pCurrentSub;
+		pCurrentSub = pTemporary->nextSub;
+		delete pTemporary;
+	}
+	pCurrentMain->firstSub = nullptr;
+
 	if (pPreviousMain == pHeadMain)
 	{
 		pHeadMain->nextMain = pCurrentMain->nextMain;
@@ -127,4 +137,21 @@ void subDelete(MainList*& pHeadMain, MainList*& pPreviousMain, MainList*& pCurre
 	{
 		pPreviousMain->nextMain = pCurrentMain->nextMain;
 	}
+	delete pCurrentMain;
+	pCurrentMain = nullptr;
+}
+
+void clearMemory(MainList*& pHeadMain)
+{
+	MainList*& pPreviousMain = pHeadMain;
+	MainList*& pCurrentMain = pHeadMain->nextMain;
+	while (!mainIsEmpty(pHeadMain))
+	{
+		subDelete(pHeadMain, pPreviousMain, pCurrentMain);
+		pPreviousMain = pCurrentMain;
+		pCurrentMain = pCurrentMain->nextMain;
+	}
+	pHeadMain = nullptr;
+	pPreviousMain = nullptr;
+	pCurrentMain = nullptr;
 }

@@ -55,7 +55,9 @@ void subAddAfter(Sublist* pHeadSub, Sublist*& pCurrentSub, int data)
 	}
 }
 
-void deleteItem()
+void deleteItem(Sublist*& pPreviousSub, Sublist*& pCurrentSub)
 {
-
+	pPreviousSub->nextSub = pCurrentSub->nextSub;
+	delete pCurrentSub;
+	pCurrentSub = nullptr;
 }
