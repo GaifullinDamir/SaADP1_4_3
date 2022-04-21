@@ -18,7 +18,7 @@
     <ClInclude Include="MainList.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="MinorList.h">
+    <ClInclude Include="Sublist.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="UserInterface.h">
@@ -29,7 +29,7 @@
     <ClCompile Include="MainList.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MinorList.cpp">
+    <ClCompile Include="Sublist.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
