@@ -46,7 +46,7 @@ void showListNumbers(MainList*& pHeadMain)
 	std::cout << std::endl;
 }
 
-bool search(MainList* pHeadMain, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData)
+bool search(MainList* pHeadMain, Sublist*& pHeadSub, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData)
 {
 	bool check;
 	if (mainIsEmpty(pHeadMain)) 
@@ -61,8 +61,12 @@ bool search(MainList* pHeadMain, Sublist*& pPreviousSub, Sublist*& pCurrentSub, 
 		{
 			pPreviousSub = nullptr;
 			pCurrentSub = pCurrentMain->firstSub;
+			pHeadSub = pCurrentMain->firstSub;
 			check = subSearch(pPreviousSub, pCurrentSub, searchedData);
-			if (check == true) { return true; }
+			if (check == true) 
+			{
+				return true; 
+			}
 			pCurrentMain = pCurrentMain->nextMain;
 			
 		}

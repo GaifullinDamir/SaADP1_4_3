@@ -18,7 +18,7 @@ void showList(MainList* pHeadMain);
 
 void showListNumbers(MainList*& pHeadMain);
 
-bool search(MainList* pHeadMain, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData);
+bool search(MainList* pHeadMain, Sublist*& pHeadSub, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData);
 
 bool mainSearch(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCurrentMain, int searchedSubList);
 

@@ -61,7 +61,7 @@ void workWithUser(MainList*& pHeadMain)
 		{
 		case(AddList):
 		{
-			
+			caseAddList(pHeadMain);
 			break;
 		}
 		case(AddItem):
@@ -138,80 +138,86 @@ void caseAddList(MainList*& pHeadMain)
 					break;
 			}
 			std::cout << std::endl;
-			std::cout << "   Item added." << std::endl;
+			std::cout << "   List added." << std::endl;
 			std::cout << std::endl;
 		}
 		else
 		{
-			std::cout << "   There is no such element." << std::endl;
+			std::cout << "   There is no such list." << std::endl;
 		}
 	}
 }
 
-void caseAddItem(DoublyList*& pHead)
+void caseAddItem(MainList*& pHeadMain)
 {
-	DoublyList* pCurrent = new DoublyList;
+	MainList* pPreviousMain;
+	MainList* pCurrentMain;
+	showListNumbers(pHeadMain);
+	std::cout << "   Enter the number of the list to which you want to add the item." << std::endl;
+	int currentList = userInput();
+	bool check1 = true;
+	check1 = mainSearch(pHeadMain, pPreviousMain, pCurrentMain, currentList);
 
-	if (isEmpty(pHead))
+	if (check1)
 	{
-		std::cout << "   Enter the item to add." << std::endl;
-		int data = userInput();
-		addAfter(pHead, pCurrent, data);
-		std::cout << std::endl;
-		std::cout << "   Item added." << std::endl;
-		std::cout << std::endl;
-	}
-	else
-	{
-		std::cout << "   Enter an element instead of or after which to insert a new one." << std::endl;
-		int currentData = userInput();
-		bool check = true;
-		printSearchMenu();
-		int var = userInput();
-		switch (var)
+		Sublist* pHeadSub;
+		Sublist* pPreviousSub;
+		Sublist* pCurrentSub;
+
+		if (subIsEmpty(pCurrentMain->firstSub))
 		{
-		case(Forward):
-			check = searchForward(pHead, pCurrent, currentData);
-			break;
-		case(Backward):
-			check = searchBackward(pHead, pCurrent, currentData);
-			break;
-		default:
-			std::cout << "   There is no such menu item." << std::endl;
-			break;
-		}
-		if (check)
-		{
-			printAddMenu();
-			int beforeOrAfter = userInput();
 			std::cout << "   Enter the item to add." << std::endl;
 			int data = userInput();
-
-			switch (beforeOrAfter)
-			{
-			case(Before):
-			{
-				addBefore(pHead, pCurrent, data);
-				break;
-			}
-			case(After):
-			{
-				addAfter(pHead, pCurrent, data);
-				break;
-			}
-			default:
-				std::cout << "   There is no such menu item." << std::endl;
-				break;
-			}
+			subAddAfter(pCurrentMain->firstSub, pCurrentSub, data);
 			std::cout << std::endl;
 			std::cout << "   Item added." << std::endl;
 			std::cout << std::endl;
 		}
 		else
 		{
-			std::cout << "   There is no such element." << std::endl;
+			
+			std::cout << "   Enter the element before/after which you want to insert a new one.." << std::endl;
+			int searchedData = userInput();
+			bool check2 = search(pHeadMain, pHeadSub, pPreviousSub, pCurrentSub, searchedData);
+
+			if (check2)
+			{
+				printAddMenu();
+				int beforeOrAfter = userInput();
+				std::cout << "   Enter the item to add." << std::endl;
+				int data = userInput();
+
+				switch (beforeOrAfter)
+				{
+					case(Before):
+					{
+						subAddBefore(pHeadSub, pPreviousSub, pCurrentSub, data);
+						break;
+					}
+					case(After):
+					{
+						subAddAfter(pHeadSub, pCurrentSub, data);
+						break;
+					}
+					default:
+						std::cout << "   There is no such menu item." << std::endl;
+						break;
+				}
+				std::cout << std::endl;
+				std::cout << "   Item added." << std::endl;
+				std::cout << std::endl;
+			}
+			else
+			{
+				std::cout << "   There is no such element." << std::endl;
+			}
 		}
 	}
+	else
+	{
+		std::cout << "   There is no such list." << std::endl;
+	}
+	
 }
 
 void caseDeleteItem(DoublyList*& pHead)
