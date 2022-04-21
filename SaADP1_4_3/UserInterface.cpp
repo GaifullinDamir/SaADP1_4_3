@@ -261,7 +261,6 @@ void caseDeleteItem(MainList* pHeadMain)
 	{
 		std::cout << "   Enter the item to delete." << std::endl;
 		int searchedData = userInput();
-		Sublist* pHeadSub;
 		Sublist* pHeadSub, * pPreviousSub, * pCurrentSub;
 		bool check = search(pHeadMain, pHeadSub, pPreviousSub, pCurrentSub, searchedData);
 		

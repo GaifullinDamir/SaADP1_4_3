@@ -23,6 +23,7 @@ bool subSearch(Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData)
 		pPreviousSub = pCurrentSub;
 		pCurrentSub = pCurrentSub->nextSub;
 	}
+	if (pCurrentSub == nullptr) { return false; }
 }
 
 void subAddBefore(Sublist* pHeadSub, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int data)
