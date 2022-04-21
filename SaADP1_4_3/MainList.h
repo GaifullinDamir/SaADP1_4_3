@@ -10,7 +10,7 @@ struct MainList
 	Sublist* firstSub;
 };
 
-void initMain(MainList*& pHeadMain);
+void mainInit(MainList*& pHeadMain);
 
 bool search(MainList* pHeadMain, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData);
 
@@ -19,3 +19,5 @@ bool searchMain(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCurre
 void mainAddBefore(MainList* pHeadMain, MainList*& pPreviousMain,  MainList*& pCurrentMain);
 
 void mainAddAfter(MainList* pHeadMain, MainList*& pCurrentMain);
+
+void deleteSublist(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCurrentMain);
