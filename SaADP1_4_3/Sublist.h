@@ -5,3 +5,4 @@ struct Sublist
 	Sublist* nextSub;
 };
 
+bool subIsEmpty(Sublist* pHeadSub);
