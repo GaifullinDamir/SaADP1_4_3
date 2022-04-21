@@ -66,22 +66,22 @@ void workWithUser(MainList*& pHeadMain)
 		}
 		case(AddItem):
 		{
-		
+			caseAddItem(pHeadMain);
 			break;
 		}
 		case(DeleteList):
 		{
-
+			caseDeleteList(pHeadMain);
 			break;
 		}
 		case(DeleteItem):
 		{
-	
+			caseDeleteItem(pHeadMain);
 			break;
 		}
 		case(Show):
 		{
-			
+			caseShow(pHeadMain);
 			break;
 		}
 		case(Exit):
@@ -220,59 +220,68 @@ void caseAddItem(MainList*& pHeadMain)
 	
 }
 
-void caseDeleteItem(DoublyList*& pHead)
+void caseDeleteList(MainList*& pHeadMain)
 {
-	if (isEmpty(pHead))
+	if (mainIsEmpty(pHeadMain))
 	{
 		std::cout << "   Nothing to delete." << std::endl;
 	}
-	std::cout << "   Enter the item to delete." << std::endl;
-	int currentData = userInput();
-	DoublyList* pCurrent = new DoublyList;
-	bool check = true;
-	printSearchMenu();
-	switch (userInput())
-	{
-	case(Forward):
-		check = searchForward(pHead, pCurrent, currentData);
-		break;
-	case(Backward):
-		check = searchBackward(pHead, pCurrent, currentData);
-		break;
-	default:
-		std::cout << "   There is no such menu item." << std::endl;
-		break;
-	}
-	if (check)
-	{
-		deleteItem(pCurrent);
-		std::cout << std::endl;
-		std::cout << "   Item deleted." << std::endl;
-		std::cout << std::endl;
-	}
 	else
 	{
-		std::cout << "   There is no such element." << std::endl;
-	}
-}
+		showListNumbers(pHeadMain);
+		std::cout << "   Enter list number to delete." << std::endl;
+		int currentList = userInput();
+		MainList* pPreviousMain;
+		MainList* pCurrentMain;
 
-void caseShow(DoublyList* pHead)
-{
-	if (isEmpty(pHead)) { std::cout << "   Nothing to show." << std::endl; }
-	else
-	{
-		printDisplayMenu();
-		switch (userInput())
+		bool check = mainSearch(pHeadMain, pPreviousMain, pCurrentMain, currentList);
+
+		if (check)
 		{
-		case(Forward):
-			showForward(pHead);
-			break;
-		case(Backward):
-			showBackward(pHead);
-			break;
-		default:
-			std::cout << "   There is no such menu item." << std::endl;
-			break;
+			subDelete(pHeadMain, pPreviousMain, pCurrentMain);
+			std::cout << std::endl;
+			std::cout << "   Sublist deleted." << std::endl;
+			std::cout << std::endl;
+		}
+		else
+		{
+			std::cout << "   There is no such element." << std::endl;
 		}
 	}
+	
+}
+
+void caseDeleteItem(MainList* pHeadMain)
+{
+	if (mainIsEmpty(pHeadMain))
+	{
+		std::cout << "   Nothing to delete." << std::endl;
+	}
+	else
+	{
+		std::cout << "   Enter the item to delete." << std::endl;
+		int searchedData = userInput();
+		Sublist* pHeadSub;
+		Sublist* pHeadSub, * pPreviousSub, * pCurrentSub;
+		bool check = search(pHeadMain, pHeadSub, pPreviousSub, pCurrentSub, searchedData);
+		
+		if (check)
+		{
+			deleteItem(pPreviousSub, pCurrentSub);
+			std::cout << std::endl;
+			std::cout << "   Item deleted." << std::endl;
+			std::cout << std::endl;
+		}
+		else
+		{
+			std::cout << "   There is no such element." << std::endl;
+		}
+	}
+	
+}
+
+void caseShow(MainList* pHeadMain)
+{
+	if (mainIsEmpty(pHeadMain)) { std::cout << "   Nothing to show." << std::endl; }
+	else{showList(pHeadMain);}
 }

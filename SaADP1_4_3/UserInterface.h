@@ -18,11 +18,20 @@ enum userInterface
 };
 
 void printMainMenu();
-void printDisplayMenu();
-void printSearchMenu();
+
+void printAddMenu();
+
 int userInput();
-void workWithUser(DoublyList*& pHead);
-void caseAddItem(DoublyList*& pHead);
-void caseDeleteItem(DoublyList*& pHead);
-void caseShow(DoublyList* pHead);
+
+void workWithUser(MainList*& pHeadMain);
+
+void caseAddList(MainList*& pHeadMain);
+
+void caseAddItem(MainList*& pHeadMain);
+
+void caseDeleteList(MainList*& pHeadMain);
+
+void caseDeleteItem(MainList* pHeadMain);
+
+void caseShow(MainList* pHeadMain);
 
