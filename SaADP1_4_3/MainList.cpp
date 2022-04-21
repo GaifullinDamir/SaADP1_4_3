@@ -35,6 +35,17 @@ void showList(MainList* pHeadMain)
 	else std::cout << "   Main list is empty. Nothing to show." << std::endl;
 }
 
+void showListNumbers(MainList*& pHeadMain)
+{
+	MainList* pCurrentMain = pHeadMain->nextMain;
+	std::cout << "Available list numbers: ";
+	while (pCurrentMain != nullptr)
+	{
+		std::cout << " " << pCurrentMain->sublistNumb << " ";
+	}
+	std::cout << std::endl;
+}
+
 bool search(MainList* pHeadMain, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData)
 {
 	bool check;

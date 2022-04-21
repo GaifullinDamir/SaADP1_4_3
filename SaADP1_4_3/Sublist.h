@@ -15,3 +15,4 @@ void subAddBefore(Sublist* pHeadSub, Sublist*& pPreviousSub, Sublist*& pCurrentS
 
 void subAddAfter(Sublist* pHeadSub, Sublist*& pCurrentSub, int data);
 
+void deleteItem(Sublist*& pPreviousSub, Sublist*& pCurrentSub);
