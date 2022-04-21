@@ -2,10 +2,11 @@
 #include "MainList.h"
 #include "Sublist.h"
 
-void init(MainList*& pHeadMain)
+void initMain(MainList*& pHeadMain)
 {
 	pHeadMain->nextMain = nullptr;
-	pHeadMain->firstSub = nullptr;
+	initSub(pHeadMain->firstSub);
+
 }
 
 bool mainIsEmpty(MainList* pHeadMain)
@@ -84,3 +85,35 @@ bool searchMain(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCurre
 	}
 }
 
+void mainAddBefore(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCurrentMain)
+{
+	if (!mainIsEmpty(pHeadMain))
+	{
+		MainList* pAdded = new MainList;
+		initSub(pAdded->firstSub);
+		pAdded->sublistNumb = pCurrentMain->sublistNumb;
+		pCurrentMain->sublistNumb++;
+		pAdded->nextMain = pCurrentMain;
+		pPreviousMain->nextMain = pAdded;
+	}
+	else { std::cout << "   Main list is empty." << std::endl; }
+}
+
+void mainAddAfter(MainList*& pHeadMain, MainList*& pCurrentMain)
+{
+	MainList* pAdded = new MainList;
+	initSub(pAdded->firstSub);
+	if (!mainIsEmpty(pHeadMain))
+	{
+		pAdded->sublistNumb = pCurrentMain->nextMain->sublistNumb;
+		pCurrentMain->nextMain->sublistNumb++;
+		pAdded->nextMain = pCurrentMain->nextMain;
+		pCurrentMain->nextMain = pAdded;
+	}
+	else
+	{
+		pAdded->sublistNumb = 1;
+		pHeadMain->nextMain = pAdded;
+		pAdded->nextMain = nullptr;
+	}
+}
