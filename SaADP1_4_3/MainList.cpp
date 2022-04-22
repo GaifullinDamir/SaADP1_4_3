@@ -24,10 +24,10 @@ void showList(MainList* pHeadMain)
 		while (pCurrentMain != nullptr)
 		{
 			Sublist* pCurrentSub = pCurrentMain->firstSub;
-			std::cout << "   Подсписок №" << pCurrentMain->sublistNumb << ": ";
+			std::cout << "   Sublist " << pCurrentMain->sublistNumb << ": ";
 			while (pCurrentSub != nullptr)
 			{
-				std::cout << pCurrentSub->data;
+				std::cout << pCurrentSub->data << " ";
 				pCurrentSub = pCurrentSub->nextSub;
 			}
 			pCurrentMain = pCurrentMain->nextMain;
@@ -40,10 +40,11 @@ void showList(MainList* pHeadMain)
 void showListNumbers(MainList*& pHeadMain)
 {
 	MainList* pCurrentMain = pHeadMain->nextMain;
-	std::cout << "Available list numbers: ";
+	std::cout << std::endl;
+	std::cout << "   Available list numbers: ";
 	while (pCurrentMain != nullptr)
 	{
-		std::cout << " " << pCurrentMain->sublistNumb << " ";
+		std::cout << " " << pCurrentMain->sublistNumb << " |";
 		pCurrentMain = pCurrentMain->nextMain;
 	}
 	std::cout << std::endl;
@@ -51,34 +52,23 @@ void showListNumbers(MainList*& pHeadMain)
 
 bool search(MainList* pHeadMain, Sublist*& pHeadSub, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData)
 {
-	bool check;
-	if (mainIsEmpty(pHeadMain)) 
+	bool check = true;
+	MainList* pCurrentMain = pHeadMain->nextMain;
+	while (pCurrentMain != nullptr)
 	{
-		std::cout << "   Main list is empty. Nothing to search." << std::endl; 
-		return false;
-	}
-	else
-	{
-		MainList* pCurrentMain = pHeadMain->nextMain;
-		while (pCurrentMain != nullptr)
+		pPreviousSub = nullptr;
+		pCurrentSub = pCurrentMain->firstSub;
+		pHeadSub = pCurrentMain->firstSub;
+		check = subSearch(pPreviousSub, pCurrentSub, searchedData);
+		if (check == true)
 		{
-			pPreviousSub = nullptr;
-			pCurrentSub = pCurrentMain->firstSub;
-			pHeadSub = pCurrentMain->firstSub;
-			check = subSearch(pPreviousSub, pCurrentSub, searchedData);
-			if (check == true) 
-			{
-				return true; 
-			}
-			pCurrentMain = pCurrentMain->nextMain;
-			
+			return true;
 		}
-		if (pCurrentMain == nullptr)
-		{
-			std::cout << "   Element not found." << std::endl;
-			return false;
-		}
+		pCurrentMain = pCurrentMain->nextMain;
+
 	}
+
+	return false;
 }
 
 bool mainSearch(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCurrentMain, int searchedSubList)
@@ -89,17 +79,12 @@ bool mainSearch(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCurre
 	{
 		if (pCurrentMain->sublistNumb == searchedSubList)
 		{
-			std::cout << "   Sublist found." << std::endl;
 			return true;
 		}
 		pPreviousMain = pCurrentMain;
 		pCurrentMain = pCurrentMain->nextMain;
 	}
-	if (pCurrentMain == nullptr)
-	{
-		std::cout << "   Sublist not found." << std::endl;
-		return false;
-	}
+	return false;
 }
 
 void mainAddBefore(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCurrentMain)
@@ -167,8 +152,8 @@ void clearMemory(MainList*& pHeadMain)
 	while (!mainIsEmpty(pHeadMain))
 	{
 		subDelete(pHeadMain, pPreviousMain, pCurrentMain);
-		pPreviousMain = pCurrentMain;
-		pCurrentMain = pCurrentMain->nextMain;
+		pPreviousMain = pHeadMain;
+		pCurrentMain = pHeadMain->nextMain;
 	}
 	pHeadMain = nullptr;
 	pPreviousMain = nullptr;

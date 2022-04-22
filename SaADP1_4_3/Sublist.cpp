@@ -17,13 +17,12 @@ bool subSearch(Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData)
 	{
 		if (pCurrentSub->data == searchedData)
 		{
-			std::cout << "   Item found." << std::endl;
 			return true;
 		}
 		pPreviousSub = pCurrentSub;
 		pCurrentSub = pCurrentSub->nextSub;
 	}
-	if (pCurrentSub == nullptr) { return false; }
+	return false;
 }
 
 void subAddBefore(Sublist* pHeadSub, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int data)
@@ -38,7 +37,7 @@ void subAddBefore(Sublist* pHeadSub, Sublist*& pPreviousSub, Sublist*& pCurrentS
 	else { std::cout << "   List is empty." << std::endl; }
 }
 
-void subAddAfter(Sublist* pHeadSub, Sublist*& pCurrentSub, int data)
+void subAddAfter(Sublist*& pHeadSub, Sublist*& pCurrentSub, int data)
 {
 	if (!subIsEmpty(pHeadSub))
 	{
