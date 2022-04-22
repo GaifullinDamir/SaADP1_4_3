@@ -98,8 +98,8 @@ void workWithUser(MainList*& pHeadMain)
 
 void caseAddList(MainList*& pHeadMain)
 {
-	MainList* pCurrentMain;
-	MainList* pPreviousMain;
+	MainList* pCurrentMain = new MainList;
+	MainList* pPreviousMain = new MainList;
 	
 	if (mainIsEmpty(pHeadMain))
 	{
@@ -150,8 +150,8 @@ void caseAddList(MainList*& pHeadMain)
 
 void caseAddItem(MainList*& pHeadMain)
 {
-	MainList* pPreviousMain;
-	MainList* pCurrentMain;
+	MainList* pPreviousMain /*= new MainList*/;
+	MainList* pCurrentMain /*= new MainList*/;
 	showListNumbers(pHeadMain);
 	std::cout << "   Enter the number of the list to which you want to add the item." << std::endl;
 	int currentList = userInput();
@@ -160,9 +160,9 @@ void caseAddItem(MainList*& pHeadMain)
 
 	if (check1)
 	{
-		Sublist* pHeadSub;
-		Sublist* pPreviousSub;
-		Sublist* pCurrentSub;
+		Sublist* pHeadSub = new Sublist;
+		Sublist* pPreviousSub = new Sublist;
+		Sublist* pCurrentSub = new Sublist;
 
 		if (subIsEmpty(pCurrentMain->firstSub))
 		{
@@ -231,8 +231,8 @@ void caseDeleteList(MainList*& pHeadMain)
 		showListNumbers(pHeadMain);
 		std::cout << "   Enter list number to delete." << std::endl;
 		int currentList = userInput();
-		MainList* pPreviousMain;
-		MainList* pCurrentMain;
+		MainList* pPreviousMain = new MainList;
+		MainList* pCurrentMain = new MainList;
 
 		bool check = mainSearch(pHeadMain, pPreviousMain, pCurrentMain, currentList);
 
@@ -261,7 +261,9 @@ void caseDeleteItem(MainList* pHeadMain)
 	{
 		std::cout << "   Enter the item to delete." << std::endl;
 		int searchedData = userInput();
-		Sublist* pHeadSub, * pPreviousSub, * pCurrentSub;
+		Sublist* pHeadSub = new Sublist;
+		Sublist* pPreviousSub = new Sublist;
+		Sublist* pCurrentSub = new Sublist;
 		bool check = search(pHeadMain, pHeadSub, pPreviousSub, pCurrentSub, searchedData);
 		
 		if (check)

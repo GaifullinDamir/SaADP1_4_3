@@ -1,7 +1,7 @@
 #pragma once
 #include "Sublist.h"
 
-int g_index = 1;
+
 
 struct MainList
 {
@@ -24,7 +24,7 @@ bool mainSearch(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCurre
 
 void mainAddBefore(MainList* pHeadMain, MainList*& pPreviousMain,  MainList*& pCurrentMain);
 
-void mainAddAfter(MainList* pHeadMain, MainList*& pCurrentMain);
+void mainAddAfter(MainList*& pHeadMain, MainList*& pCurrentMain);
 
 void subDelete(MainList*& pHeadMain, MainList*& pPreviousMain, MainList*& pCurrentMain);
 

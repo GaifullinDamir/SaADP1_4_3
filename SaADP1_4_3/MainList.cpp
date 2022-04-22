@@ -2,6 +2,8 @@
 #include "MainList.h"
 #include "Sublist.h"
 
+int g_index = 1;
+
 void mainInit(MainList*& pHeadMain)
 {
 	pHeadMain->nextMain = nullptr;
@@ -42,6 +44,7 @@ void showListNumbers(MainList*& pHeadMain)
 	while (pCurrentMain != nullptr)
 	{
 		std::cout << " " << pCurrentMain->sublistNumb << " ";
+		pCurrentMain = pCurrentMain->nextMain;
 	}
 	std::cout << std::endl;
 }
@@ -115,19 +118,20 @@ void mainAddBefore(MainList* pHeadMain, MainList*& pPreviousMain, MainList*& pCu
 
 void mainAddAfter(MainList*& pHeadMain, MainList*& pCurrentMain)
 {
-	MainList* pAdded = new MainList;
-	subInit(pAdded->firstSub);
 	if (!mainIsEmpty(pHeadMain))
 	{
+		MainList* pAdded = new MainList;
+		subInit(pAdded->firstSub);
 		pAdded->sublistNumb = g_index;
 		pAdded->nextMain = pCurrentMain->nextMain;
 		pCurrentMain->nextMain = pAdded;
 	}
 	else
 	{
-		pAdded->sublistNumb = g_index;
-		pHeadMain->nextMain = pAdded;
-		pAdded->nextMain = nullptr;
+		subInit(pCurrentMain->firstSub);
+		pCurrentMain->sublistNumb = g_index;
+		pHeadMain->nextMain = pCurrentMain;
+		pCurrentMain->nextMain = nullptr;
 	}
 	::g_index++;
 }
