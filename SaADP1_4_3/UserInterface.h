@@ -4,7 +4,8 @@
 
 enum userInterface
 {
-	AddList = 1,
+	ShowMenu,
+	AddList ,
 	AddItem,
 	DeleteList,
 	DeleteItem,

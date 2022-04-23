@@ -50,24 +50,24 @@ void showListNumbers(MainList*& pHeadMain)
 	std::cout << std::endl;
 }
 
-bool search(MainList* pHeadMain, Sublist*& pHeadSub, Sublist*& pPreviousSub, Sublist*& pCurrentSub, int searchedData)
+bool search(MainList* pHeadMain, MainList*& pCurrentMain, int searchedData)
 {
 	bool check = true;
-	MainList* pCurrentMain = pHeadMain->nextMain;
+	pCurrentMain= pHeadMain->nextMain;
 	while (pCurrentMain != nullptr)
 	{
-		pPreviousSub = nullptr;
-		pCurrentSub = pCurrentMain->firstSub;
-		pHeadSub = pCurrentMain->firstSub;
+		Sublist* pPreviousSub = nullptr;
+		Sublist* pCurrentSub = pCurrentMain->firstSub;
 		check = subSearch(pPreviousSub, pCurrentSub, searchedData);
 		if (check == true)
 		{
+			std::cout << "   Item: " << searchedData << " in list: " << pCurrentMain->sublistNumb << std::endl;
 			return true;
 		}
 		pCurrentMain = pCurrentMain->nextMain;
 
 	}
-
+	std::cout << "   Item: " << searchedData << " was not found." << std::endl;
 	return false;
 }
 

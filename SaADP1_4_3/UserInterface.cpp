@@ -53,12 +53,17 @@ void workWithUser(MainList*& pHeadMain)
 	bool work = true;
 	while (work)
 	{
-		printMainMenu();
+		std::cout << "   (0) - show menu." << std::endl;
 		std::cout << "   What do you want to do? " << std::endl;
 		std::cout << std::endl;
 		int option = userInput();
 		switch (option)
 		{
+		case(ShowMenu):
+		{
+			printMainMenu();
+			break;
+		}
 		case(AddList):
 		{
 			caseAddList(pHeadMain);
@@ -89,8 +94,10 @@ void workWithUser(MainList*& pHeadMain)
 			work = false;
 			break;
 		}
+		
 		default:
 			std::cout << "   There is no such menu item." << std::endl;
+			std::cout << std::endl;
 			break;
 		}
 	}
@@ -135,6 +142,7 @@ void caseAddList(MainList*& pHeadMain)
 				}
 				default:
 					std::cout << "   There is no such menu item." << std::endl;
+					std::cout << std::endl;
 					break;
 			}
 			std::cout << std::endl;
@@ -144,88 +152,75 @@ void caseAddList(MainList*& pHeadMain)
 		else
 		{
 			std::cout << "   There is no such list." << std::endl;
+			std::cout << std::endl;
 		}
 	}
 }
 
 void caseAddItem(MainList*& pHeadMain)
 {
-	MainList* pPreviousMain;
-	MainList* pCurrentMain;
-
-	if (!mainIsEmpty(pHeadMain))
+	if (mainIsEmpty(pHeadMain))
+	{
+		std::cout << "   Main list is empty. Nothing to search." << std::endl;
+		std::cout << std::endl;
+	}
+	else
 	{
 		showListNumbers(pHeadMain);
-		std::cout << "   Enter the number of the list to which you want to add the item." << std::endl;
-		int currentList = userInput();
-		bool check1 = true;
-		check1 = mainSearch(pHeadMain, pPreviousMain, pCurrentMain, currentList);
-
-		if (check1)
+		std::cout << "   Enter list number." << std::endl;
+		int searchedList = userInput();
+		MainList* pPreviousMain = new MainList;
+		MainList* pCurrentMain = new MainList;
+		bool checkMain = mainSearch(pHeadMain, pPreviousMain, pCurrentMain, searchedList);
+		if (checkMain)
 		{
-			Sublist* pHeadSub = new Sublist;
-			Sublist* pPreviousSub = new Sublist;
-			Sublist* pCurrentSub = new Sublist;
-			std::cout << "   Sublist found." << std::endl;
-
+			Sublist* pPreviousSub = nullptr;
+			Sublist* pCurrentSub = pCurrentMain->firstSub;
 			if (subIsEmpty(pCurrentMain->firstSub))
 			{
 				std::cout << "   Enter the item to add." << std::endl;
 				int data = userInput();
 				subAddAfter(pCurrentMain->firstSub, pCurrentSub, data);
-				std::cout << std::endl;
 				std::cout << "   Item added." << std::endl;
 				std::cout << std::endl;
 			}
 			else
 			{
-
-				std::cout << "   Enter the element before/after which you want to insert a new one.." << std::endl;
+				std::cout << "   Enter item to search." << std::endl;
 				int searchedData = userInput();
-				bool check2 = search(pHeadMain, pHeadSub, pPreviousSub, pCurrentSub, searchedData);
-
-				if (check2)
+				bool checkSub = subSearch(pPreviousSub, pCurrentSub, searchedData);
+				if (checkSub)
 				{
-					std::cout << "   Item found." << std::endl;
-					printAddMenu();
-					int beforeOrAfter = userInput();
 					std::cout << "   Enter the item to add." << std::endl;
 					int data = userInput();
+					std::cout << "   Add before/after - (1)/(2)" << std::endl;
 
-					switch (beforeOrAfter)
+					switch (userInput())
 					{
 					case(Before):
-					{
-						subAddBefore(pHeadSub, pPreviousSub, pCurrentSub, data);
+						subAddBefore(pCurrentMain->firstSub, pPreviousSub, pCurrentSub, data);
+						std::cout << "   Item added." << std::endl;
+						std::cout << std::endl;
 						break;
-					}
 					case(After):
-					{
-						subAddAfter(pHeadSub, pCurrentSub, data);
+						subAddAfter(pCurrentMain->firstSub, pCurrentSub, data);
+						std::cout << "   Item added." << std::endl;
+						std::cout << std::endl;
 						break;
-					}
 					default:
 						std::cout << "   There is no such menu item." << std::endl;
+						std::cout << std::endl;
 						break;
 					}
-					std::cout << std::endl;
-					std::cout << "   Item added." << std::endl;
-					std::cout << std::endl;
 				}
-				else
-				{
-					std::cout << "   There is no such element." << std::endl;
-				}
+
 			}
 		}
-		else
-		{
+		else 
 			std::cout << "   There is no such list." << std::endl;
-		}
+			std::cout << std::endl;
+		
 	}
-	else std::cout << "   Main list is empty. Nothing to search." << std::endl;
-
-	
 }
 
 void caseDeleteList(MainList*& pHeadMain)
@@ -267,16 +262,19 @@ void caseDeleteItem(MainList* pHeadMain)
 	}
 	else
 	{
+		caseShow(pHeadMain);
 		std::cout << "   Enter the item to delete." << std::endl;
 		int searchedData = userInput();
-		Sublist* pHeadSub = new Sublist;
-		Sublist* pPreviousSub = new Sublist;
-		Sublist* pCurrentSub = new Sublist;
-		bool check = search(pHeadMain, pHeadSub, pPreviousSub, pCurrentSub, searchedData);
+		MainList* pCurrentMain = new MainList;
+		bool check = search(pHeadMain, pCurrentMain, searchedData);
 		
 		if (check)
 		{
-			deleteItem(pPreviousSub, pCurrentSub);
+			Sublist* pPreviousSub = nullptr;
+			Sublist* pCurrentSub = pCurrentMain->firstSub;
+			subSearch(pPreviousSub, pCurrentSub, searchedData);
+			deleteItem(pCurrentMain->firstSub, pPreviousSub, pCurrentSub);
+
 			std::cout << std::endl;
 			std::cout << "   Item deleted." << std::endl;
 			std::cout << std::endl;
